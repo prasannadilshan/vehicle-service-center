@@ -24,9 +24,16 @@ public class VehicleService {
     }
 
     @Transactional
-    public void deleteByServiceYear(int serviceYear) {
-        vehicleRepository.deleteByServiceYear(serviceYear);
+    public String deleteByServiceYear(int serviceYear) {
+        int deletedCount = vehicleRepository.deleteByServiceYear(serviceYear);
+
+        if (deletedCount == 0) {
+            return "⚠️ No vehicle records found for service year " + serviceYear;
+        }
+
+        return "✅ " + deletedCount + " vehicle records deleted for service year " + serviceYear;
     }
+
 
     public Vehicle saveVehicle(Vehicle vehicle) {
         return vehicleRepository.save(vehicle);

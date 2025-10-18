@@ -3,8 +3,10 @@ package com.example.vehicle_service_center.repository;
 import com.example.vehicle_service_center.model.Vehicle;
 import org.springframework.data.domain.Limit;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,7 +18,12 @@ public interface VehicleRepository extends JpaRepository<Vehicle,Long> {
     @Query("SELECT v.vehicleType FROM Vehicle v WHERE v.serviceId = :serviceId")
     String findVehicleTypeByServiceId(long serviceId);
 
-    void deleteByServiceYear(int serviceYear);
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM Vehicle v WHERE v.serviceYear = :serviceYear")
+    int deleteByServiceYear(int serviceYear);
+
+    int countByServiceYear(int serviceYear);
 
     List<Vehicle> findAll();
 }

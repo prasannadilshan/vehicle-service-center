@@ -36,8 +36,8 @@ public class VehicleController {
     }
 
     @DeleteMapping("/year/{year}")
-    public void deleteVehicleByYear(@PathVariable int year) {
-        vehicleService.deleteByServiceYear(year);
+    public String deleteVehicleByYear(@PathVariable int year) {
+       return vehicleService.deleteByServiceYear(year);
     }
 
 
